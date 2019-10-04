@@ -62,16 +62,30 @@ class CiphersController < ApplicationController
     end
   end
 
-  def encode(cipher,num)
-    @cipher = cipher
-    @num = Integer(num)
-      str = cipher.body
-      off = cipher.offset
-      ascii = str.chars.map { |c| c.ord }
-      shifted = ascii.map { |c| c + off}
-      shifted2 = shifted.map {|c| c % num}
+#  def encode(cipher,num)
+#    @cipher = cipher
+#    @num = Integer(num)
+#      str = cipher.body
+#      off = cipher.offset
+#      ascii = str.chars.map { |c| c.ord }
+  #    shifted = ascii.map { |c| c - 97 }
+      # shifted = ascii.map { |c| c + off}
 
-    cipher.body =  shifted.map { |c| c.chr }.join
+  #  cipher.body =  shifted.map { |c| c.chr }.join
+#  end
+
+LOWER_CASE = ('a'.ord .. 'z'.ord)
+UPPER_CASE = ('A'.ord .. 'Z'.ord)
+  def encode(c, by)
+    alphabet = (("A".."Z").to_a + ("a".."z").to_a).join
+    byte = c.ord
+    if LOWER_CASE.include?(byte) then
+        ((((byte - LOWER_CASE.min) + by) % 26) + LOWER_CASE.min).chr
+    elsif UPPER_CASE.include?(byte) then
+        ((((byte - UPPER_CASE.min) + by) % 26) + UPPER_CASE.min).chr
+    else
+        c
+    end
   end
   helper_method :encode
 

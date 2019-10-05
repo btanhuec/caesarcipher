@@ -67,13 +67,12 @@ class CiphersController < ApplicationController
     str = cipher.body
     n = cipher.offset
     ascii = str.split("")
-    temp = ''
+    t = ''
     ascii.each do |w|
       temp = calc(w,n)
-      w = temp + w
-      temp = temp + w
+      t = t + temp
     end
-    cipher.body =  temp
+    cipher.body =  t
   end
 
   LOWER_CASE = ('a'.ord .. 'z'.ord)

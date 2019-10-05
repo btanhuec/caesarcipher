@@ -15,7 +15,7 @@
     <% @ciphers.each do |cipher| %>
       <tr>
         <td><%= cipher.offset %></td>
-        <td><%= encode(cipher,26) %></td>
+        <td><%= encode(cipher) %></td>
         <td><%= link_to 'Show', cipher %></td>
         <td><%= link_to 'Edit', edit_cipher_path(cipher) %></td>
         <td><%= link_to 'Destroy', cipher, method: :delete, data: { confirm: 'Are you sure?' } %></td>

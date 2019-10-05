@@ -62,21 +62,23 @@ class CiphersController < ApplicationController
     end
   end
 
-#  def encode(cipher,num)
-#    @cipher = cipher
-#    @num = Integer(num)
-#      str = cipher.body
-#      off = cipher.offset
-#      ascii = str.chars.map { |c| c.ord }
-  #    shifted = ascii.map { |c| c - 97 }
-      # shifted = ascii.map { |c| c + off}
+  def encode(cipher)
+    @cipher = cipher
+    str = cipher.body
+    n = cipher.offset
+    ascii = str.split("")
+    temp = ''
+    ascii.each do |w|
+      temp = calc(w,n)
+      w = temp + w
+      temp = temp + w
+    end
+    cipher.body =  temp
+  end
 
-  #  cipher.body =  shifted.map { |c| c.chr }.join
-#  end
-
-LOWER_CASE = ('a'.ord .. 'z'.ord)
-UPPER_CASE = ('A'.ord .. 'Z'.ord)
-  def encode(c, by)
+  LOWER_CASE = ('a'.ord .. 'z'.ord)
+  UPPER_CASE = ('A'.ord .. 'Z'.ord)
+  def calc(c, by)
     alphabet = (("A".."Z").to_a + ("a".."z").to_a).join
     byte = c.ord
     if LOWER_CASE.include?(byte) then
